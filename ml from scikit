@@ -1,0 +1,180 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "name": "Untitled0.ipynb",
+      "provenance": [],
+      "authorship_tag": "ABX9TyNc8Q44em0hswwjm74JFd51",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/sanusiidrisdebs/Data-Science-For-Beginners/blob/main/ml%20from%20scikit\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "GJQs3gQFvnut",
+        "outputId": "2a3c5fcc-a867-45e7-d452-0269ed05bc5d"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "RandomForestClassifier(random_state=0)"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ],
+      "source": [
+        "# Fitting and predicting: estimator basics\n",
+        "from sklearn.ensemble import RandomForestClassifier\n",
+        "clf = RandomForestClassifier(random_state=0)\n",
+        "X = [[ 1,  2,  3],  [11, 12, 13]]\n",
+        "y = [0, 1]  # classes of each sample\n",
+        "clf.fit(X, y)\n",
+        "RandomForestClassifier(random_state=0)"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "clf.predict(X)  # predict classes of the training data\n",
+        "\n",
+        "clf.predict([[4, 5, 6], [14, 15, 16]])  # predict classes of new data\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "DScI0faVw8fl",
+        "outputId": "92dbd7f4-f892-4e63-ed10-67d9633ba6de"
+      },
+      "execution_count": 4,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([0, 1])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 4
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Transformers and pre-processors\n",
+        "from sklearn.preprocessing import StandardScaler\n",
+        "X = [[0, 15], [1, -10]] \n",
+        "# scale data according to computed scaling values\n",
+        "StandardScaler().fit(X).transform(X)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RXpoldOyxred",
+        "outputId": "63bfb505-f6a4-487f-f639-2aff82eab8f8"
+      },
+      "execution_count": 5,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "array([[-1.,  1.],\n",
+              "       [ 1., -1.]])"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "#Pipelines: chaining pre-processors and estimators¶\n",
+        "from sklearn.preprocessing import StandardScaler\n",
+        "from sklearn.linear_model import LogisticRegression\n",
+        "from sklearn.pipeline import make_pipeline\n",
+        "from sklearn.datasets import load_iris\n",
+        "from sklearn.model_selection import train_test_split\n",
+        "from sklearn.metrics import accuracy_score\n",
+        "\n",
+        "# create a pipeline object\n",
+        "pipe = make_pipeline(\n",
+        "    StandardScaler(),\n",
+        "    LogisticRegression()\n",
+        ")\n",
+        "\n",
+        "# load the iris dataset and split it into train and test sets\n",
+        "X, y = load_iris(return_X_y=True)\n",
+        "X_train, X_test, y_train, y_test = train_test_split(X, y, random_state=0)\n",
+        "\n",
+        "# fit the whole pipeline\n",
+        "pipe.fit(X_train, y_train)\n",
+        "\n",
+        "\n",
+        "# we can now use it like any other estimator\n",
+        "accuracy_score(pipe.predict(X_test), y_test)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "jtOCCyPkyCfw",
+        "outputId": "bd87e7a1-434f-486a-fbed-194eeb91a602"
+      },
+      "execution_count": 6,
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0.9736842105263158"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 6
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        ""
+      ],
+      "metadata": {
+        "id": "BoU3Qy84wLCm"
+      }
+    }
+  ]
+}
